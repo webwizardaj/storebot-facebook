@@ -1,0 +1,6 @@
+
+requests
+python-dotenv
+cloudinary
+google-genai
+Pillow

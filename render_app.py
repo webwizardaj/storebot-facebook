@@ -23,6 +23,14 @@ def publish():
     expected_secret = os.getenv("PUBLISH_SECRET", "")
     supplied_secret = request.headers.get("Authorization", "")
 
+    # Safe diagnostic: never logs the actual secret
+    logging.info(
+        "Auth diagnostic: secret_configured=%s, expected_length=%s, supplied_bearer=%s",
+        bool(expected_secret),
+        len(expected_secret),
+        supplied_secret.startswith("Bearer ") and len(supplied_secret) > 7,
+    )
+
     if not expected_secret or not hmac.compare_digest(
         supplied_secret, f"Bearer {expected_secret}"
     ):
